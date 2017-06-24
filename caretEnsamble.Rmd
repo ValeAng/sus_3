@@ -1,0 +1,118 @@
+---
+title: "GitHub"
+author: "Riccardo Parviero"
+date: "22/6/2017"
+output: html_document
+---
+
+```{r}
+rm(list=ls())
+```
+
+Link utili!  
+
+* https://cran.r-project.org/web/packages/caretEnsemble/vignettes/caretEnsemble-intro.html
+* http://machinelearningmastery.com/machine-learning-ensembles-with-r/
+
+# Ensamble
+
+```{r}
+library(caret)
+library(caretEnsemble)
+
+library(mlbench) #per il dataset benchmark
+library(kernlab) #per la support vector machine
+```
+
+# Dataset
+
+```{r}
+data(Ionosphere)
+dataset <- Ionosphere
+dataset <- dataset[,-2]
+dataset$V1 <- as.numeric(as.character(dataset$V1))
+```
+
+# Create submodels
+
+```{r}
+control <- trainControl(method="repeatedcv",
+                        number=10,
+                        repeats=3,
+                        savePredictions=TRUE,
+                        classProbs=TRUE)
+
+algorithmList <- c('lda', 'rpart', 'glm', 'knn', 'svmRadial')
+
+set.seed(123)
+models <- caretList(Class~., data=dataset, trControl=control, methodList=algorithmList)
+results <- resamples(models)
+
+summary(results)
+```
+
+```{r}
+dotplot(results)
+```
+
+Studio la correlazione tra le previsioni dei vari modelli e controllo che non sia alta (< di 75%):
+```{r}
+modelCor(results)
+```
+
+```{r}
+splom(results)
+```
+
+Aggiunto dalla Vale
+
+```{r}
+
+greedy_ensemble <- caretEnsemble(
+  models, 
+  metric="ROC",
+  trControl=trainControl(
+    number=2,
+    summaryFunction=twoClassSummary,
+    classProbs=TRUE
+    ))
+
+summary(greedy_ensemble) #non capisco perchè mi dà errore
+```
+
+
+
+# STACKING
+
+### Con glm come stacker
+
+```{r}
+# stack using glm
+stackControl <- trainControl(method="repeatedcv",
+                             number=10,
+                             repeats=3,
+                             savePredictions=TRUE,
+                             classProbs=TRUE)
+
+set.seed(123)
+stack.glm <- caretStack(models, method="glm", metric="Accuracy", trControl=stackControl)
+print(stack.glm)
+```
+
+```{r}
+stack.glm$models
+```
+
+
+### Con rf come stacker
+
+```{r}
+set.seed(123)
+stack.rf <- caretStack(models, method="rf", metric="Accuracy", trControl=stackControl)
+print(stack.rf)
+```
+
+```{r}
+stack.rf$models
+```
+
