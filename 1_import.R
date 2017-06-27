@@ -1,4 +1,5 @@
 # Comandi per il data import
 
-# Blablabla 
+library(tidyverse)
 
+train <- read_csv("dataset_stima.csv")
