@@ -1,0 +1,134 @@
+---
+title: "Richi Ensamble"
+author: "Riccardo Parviero"
+date: "24/6/2017"
+output: html_document
+---
+
+```{r}
+rm(list=ls())
+```
+
+```{r}
+library(caret)
+library(caretEnsemble)
+library(mlbench)
+```
+
+# Dataset
+
+```{r}
+data(Ionosphere)
+dataset <- Ionosphere
+dataset <- dataset[,-2]
+dataset$V1 <- as.numeric(as.character(dataset$V1))
+
+set.seed(123)
+istrain = createDataPartition(y = dataset$Class, p = .75, list = FALSE)
+train = dataset[istrain, ]
+test = dataset[-istrain, ]
+```
+
+# Create submodels
+
+```{r}
+control <- trainControl(method="repeatedcv",
+                        number=10,
+                        repeats=3,
+                        savePredictions=TRUE,
+                        classProbs=TRUE)
+
+algorithmList <- c('lda', 'rpart', 'rf', 'glm', 'knn', 'svmRadial')
+
+set.seed(123)
+models <- caretList(Class~.,
+                    data=train,
+                    trControl=control,
+                    methodList=algorithmList)
+
+results <- resamples(models)
+
+summary(results)
+```
+
+```{r}
+dotplot(results)
+```
+
+Sul training non ho correlazioni molto alte:
+
+```{r}
+modelCor(results)
+```
+
+Sul test sì:
+
+```{r}
+predicted = predict(models, newdata = test)
+
+cor(predicted)
+```
+
+```{r}
+classed = apply(predicted, 2, function(x) ifelse(x>0, "good", "bad"))
+accuracies = apply(classed, 2, function(x) mean(x == test$Class))
+
+accuracies
+```
+
+
+# STACKING
+
+### Con glm come stacker
+
+```{r}
+# stack using glm
+stackControl <- trainControl(method="repeatedcv",
+                             number=10,
+                             repeats=3,
+                             savePredictions=TRUE,
+                             classProbs=TRUE)
+
+set.seed(123)
+stack.glm <- caretStack(models, method="glm", metric="Accuracy", trControl=stackControl)
+print(stack.glm)
+```
+
+```{r}
+pred.stack.glm = predict(stack.glm, newdata = test)
+
+mean(pred.stack.glm == test$Class)
+```
+
+
+### Con rf come stacker
+
+```{r}
+set.seed(123)
+stack.rf <- caretStack(models, method="rf", metric="Accuracy", trControl=stackControl)
+print(stack.rf)
+```
+
+```{r}
+pred.stack.rf = predict(stack.rf, newdata = test)
+
+mean(pred.stack.rf == test$Class)
+```
+
+# Concluding remarks
+
+Praticamente siamo passati da queste accuracy sul test:
+```{r}
+accuracies
+```
+
+A queste:
+```{r}
+mean(pred.stack.glm == test$Class)
+```
+
+```{r}
+mean(pred.stack.rf == test$Class)
+```
+
+

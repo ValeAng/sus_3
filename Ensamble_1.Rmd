@@ -1,0 +1,95 @@
+---
+title: "Prova Previsione"
+author: "Riccardo Parviero"
+date: "27/6/2017"
+output: html_document
+---
+
+```{r}
+source("2.1_Undersampling.R")
+```
+
+```{r}
+library(caret)
+library(caretEnsemble)
+```
+
+# Polish
+
+```{r}
+dataset = train
+dataset = dataset[, -2]
+dataset = dataset[complete.cases(dataset), ]
+```
+
+### Valid R names
+
+```{r}
+levels(dataset$TARG_TOT) = make.names(levels(dataset$TARG_TOT))
+```
+
+```{r, eval=FALSE, include=FALSE}
+levels(dataset$NUM_FIGLI) = make.names(levels(dataset$NUM_FIGLI))
+levels(dataset$COD_RES) = make.names(levels(dataset$COD_RES))
+levels(dataset$PROF) = make.names(levels(dataset$PROF))
+```
+
+# Stacking
+
+```{r}
+set.seed(123)
+istrain = createDataPartition(y = dataset$TARG_TOT, p = .75, list = FALSE)
+train = dataset[istrain, ]
+test = dataset[-istrain, ]
+```
+
+```{r}
+control <- trainControl(method = "repeatedcv",
+                        number = 5,
+                        repeats = 1,
+                        classProbs = TRUE,
+                        summaryFunction = twoClassSummary,
+                        savePredictions = "final")
+
+lista <- c("knn", "lda")
+
+#"logreg", "rf", "svmRadial"
+```
+
+```{r}
+set.seed(123)
+models <- caretList(TARG_TOT ~ .,
+                    data = train,
+                    trControl = control,
+                    metric = "ROC",
+                    methodList = lista)
+```
+
+### Glm stacker
+
+```{r}
+set.seed(123)
+stack.glm <- caretStack(models, method="glm", metric="Accuracy", trControl=stackControl)
+print(stack.glm)
+```
+
+```{r}
+pred.stack.glm = predict(stack.glm, newdata = test)
+
+mean(pred.stack.glm == test$TARG_TOT)
+```
+
+### Rf stacker
+
+```{r}
+set.seed(123)
+stack.rf <- caretStack(models, method="rf", metric="Accuracy", trControl=stackControl)
+print(stack.rf)
+```
+
+```{r}
+pred.stack.rf = predict(stack.rf, newdata = test)
+
+mean(pred.stack.rf == test$Class)
+```
+
