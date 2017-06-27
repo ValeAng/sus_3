@@ -1,3 +1,4 @@
+# rm(list=ls())
 # Comandi per il data import
 
 library(tidyverse)

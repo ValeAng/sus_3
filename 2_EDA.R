@@ -92,6 +92,11 @@ train$Figli <- as.factor(train$Figli)
 # Primo tentativo
 train <- train %>%
   select(-ANZ_RES, -ANZ_PROF) %>%
-  filter(!is.na(IMP_RED), !is.na(IMP_FAM), !is.na(PPQ_18_IMP_FIN), !is.na(FIND_PPQ18_IMP_FIN))
+  filter(!is.na(PPQ_18_IMP_FIN), !is.na(FIND_PPQ18_IMP_FIN))
 
-anyNA(train)
+train$IMP_FAM[which(train$TARG_TOT == 0 & is.na(train$IMP_FAM))] <- 1735.259
+train$IMP_FAM[which(train$TARG_TOT == 1 & is.na(train$IMP_FAM))] <- 1948.663
+
+train$IMP_RED[which(train$TARG_TOT == 0 & is.na(train$IMP_RED))] <- 1328.747
+train$IMP_RED[which(train$TARG_TOT == 1 & is.na(train$IMP_RED))] <- 1551.051
+
