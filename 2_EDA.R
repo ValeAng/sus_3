@@ -11,6 +11,7 @@ train$COD_STA_CIV = as.factor(train$COD_STA_CIV)
 
 # NUM_FIGLI = Numero figli
 train$NUM_FIGLI = as.factor(train$NUM_FIGLI)
+levels(train$NUM_FIGLI) = c("0", "1-3", ">3")
 
 # FLG_SEX = Sesso
 train$FLG_SEX = as.factor(train$FLG_SEX)
@@ -79,7 +80,7 @@ train$saldo_log = log(train$saldo_totale + 1)
 
 train <- train %>%
   mutate(Richiesta_prestito_18mesi = ifelse(is.na(FIND_PPQ18SS_MONTH_DAT_MAX_FIN),0,1)) %>%
-  select(-FIND_PPQ18SS_MONTH_DAT_MAX_FIN, - ANZ_BAN)
+  select(-FIND_PPQ18SS_MONTH_DAT_MAX_FIN, -ANZ_BAN)
 
 train$Richiesta_prestito_18mesi <- as.factor(train$Richiesta_prestito_18mesi)
 
