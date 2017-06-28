@@ -1,4 +1,4 @@
-source("2_EDA.R")
+source("1_import.R")
 
 library(unbalanced)
 
@@ -11,7 +11,7 @@ under = ubUnder(X, Y, perc = 50, method = "percPos")
 
 newtrain = cbind(under$X, under$Y)
 
-colnames(newtrain)[84] = "TARG_TOT"
+colnames(newtrain)[74] = "TARG_TOT"
 
 dim(newtrain)
 

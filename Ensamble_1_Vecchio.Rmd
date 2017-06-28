@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r}
-source("2.1_Undersampling.R")
+source("2.2_Undersampling.R")
 ```
 
 ```{r}
@@ -18,7 +18,7 @@ library(caretEnsemble)
 
 ```{r}
 dataset = newtrain
-dataset = dataset[, -c(1, 7, 8, 9)]
+dataset = dataset[, -c(1, 3, 4, 5, 39, 10, 11, 46, 44, 12)]
 ```
 
 ### Valid R names
@@ -59,7 +59,7 @@ set.seed(123)
 models <- caretList(TARG_TOT ~ .,
                     data = train,
                     trControl = control,
-                    metric = "ROC",
+                    metric = "Accuracy",
                     methodList = lista)
 ```
 
@@ -90,8 +90,8 @@ stackControl <- trainControl(method = "repeatedcv",
 ```{r}
 set.seed(123)
 stack.glm <- caretStack(models,
-                        method = "glm",
-                        metric = "ROC",
+                        method="glm",
+                        metric="ROC",
                         trControl=stackControl)
 print(stack.glm)
 ```
@@ -108,7 +108,7 @@ mean(pred.stack.glm == test$TARG_TOT)
 set.seed(123)
 stack.rf <- caretStack(models,
                        method = "rf",
-                       metric = "ROC",
+                       metric = "Accuracy",
                        trControl = stackControl)
 print(stack.rf)
 ```
@@ -136,7 +136,7 @@ test[posi, "FIND_NUM_MEN_RES"] = 0
 ```
 
 ```{r}
-test = test[, -c(1, 7, 8, 9)]
+test = test[, -c(1, 3, 4, 5, 39, 10, 11, 46, 44, 12)]
 
 probs = predict(stack.glm, newdata = test, type = "prob")
 ```
