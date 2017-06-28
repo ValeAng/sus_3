@@ -9,12 +9,8 @@
 \begin{document}
 \maketitle
 
-\begin{itemize}
-	\item correggere i PIU
-\end{itemize}
-
 \paragraph{Descrizione del dataset}
-Il problema di previsione affrontato consisteva nel selezionare su un test set i 10mila clienti della banca Findomestic che risultano piu propensi ad accettare una proposta commerciale in seguito a una telefonata. 
+Il problema di previsione affrontato consisteva nel selezionare su un test set i 10mila clienti della banca Findomestic che risultano pi\`u propensi ad accettare una proposta commerciale in seguito a una telefonata. 
 
 Il problema si qualificava come un'analisi supervisionata con un \textit{training set} (40mila obs.) che riportava il valore della variabile target, in questo caso una dummy che assumeva valore $1$ in caso il cliente chiamato avesse accolto la proposta ricevuta e $0$ in caso contrario. 
 
@@ -26,7 +22,11 @@ Per ovviare all'inconveniente dello sbilanciamento del dataset si \`e ricorso ad
 
 Oltre a risolvere il problema dello sbilanciamento, l'undersampling ci ha permesso di valutare la bont\`a di modelli diversi dato che un minor numero di osservazioni riduceva sensibilmente il peso computazionale.
 
-\paragraph{Creazione } Nella prima parte del lavoro ci siamo concentrati sulla costruzione di variabili che aiutassero a migliorare la previsione.
+\paragraph{Feature engineering}  Nella prima parte del lavoro ci siamo concentrati sulla costruzione di variabili che aiutassero a migliorare la previsione. Inizialmente abbiamo rimosso alcune variabili a causa dell'elevato numero di dati mancanti quali anzianit\`a bancaria (\verb|ANZ_BAN|) o il numero di pratiche riguardanti i prestiti personali(\verb|FIND_PPQ_C_NUM_PRA|). Per altre si \`e ricorso all'imputazione tramite media sia 
+
+Per quanto riguarda la creazione di nuove variabili il criterio utilizzato \`e stato quello della riduzione del numero di regressori da dare in pasto ai modelli che via via abbiamo considerato.
+
+\paragraph{Random Forest}
 
 
 \end{document}          

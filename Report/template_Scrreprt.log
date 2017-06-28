@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2016.8.5)  28 JUN 2017 05:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2016.8.5)  28 JUN 2017 05:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -131,36 +131,29 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 {c:/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 13.
- (c:/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 13.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 19.
+(Font)              <10.95> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 19.
+(Font)              <8> on input line 15.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 19.
+(Font)              <6> on input line 15.
 Missing character: There is no Ã in font cmr10!
 Missing character: There is no © in font cmr10!
- [2]
-(./template_Scrreprt.aux) ) 
+ [2] (./template_Scrreprt.aux) ) 
 Here is how much of TeX's memory you used:
- 2184 strings out of 493013
- 41555 string characters out of 6136994
+ 2167 strings out of 493013
+ 41249 string characters out of 6136994
  192453 words of memory out of 5000000
- 5777 multiletter control sequences out of 15000+600000
- 10704 words of font info for 37 fonts, out of 8000000 for 9000
+ 5762 multiletter control sequences out of 15000+600000
+ 10872 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,7n,66p,8830b,296s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2016/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmr10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
-12.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb>
-<c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texli
-ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on template_Scrreprt.pdf (2 pages, 60456 bytes).
+<c:/texlive/2016/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr12.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10
+.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/
+texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on template_Scrreprt.pdf (2 pages, 62586 bytes).
 PDF statistics:
  31 PDF objects out of 1000 (max. 8388607)
  21 compressed objects within 1 object stream
