@@ -4,3 +4,4 @@
 library(tidyverse)
 
 train <- read_csv("dataset_stima.csv")
+test <- read_csv("dataset_previsione.csv")
